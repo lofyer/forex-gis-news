@@ -1,0 +1,19 @@
+posts:
+    id
+    src_title
+    src_link
+    date
+    content
+    content_hash
+    url
+    title
+
+rss_rating:
+    id
+    tags 所属新闻标签
+    country 所属国家
+    rating 对所属国家货币评分
+
+tags:
+    id
+    tag_name 新闻分类，用于训练
