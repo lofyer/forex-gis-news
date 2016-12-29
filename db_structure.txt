@@ -17,3 +17,8 @@ rss_rating:
 tags:
     id
     tag_name 新闻分类，用于训练
+
+city_map:
+    id
+    city
+    country

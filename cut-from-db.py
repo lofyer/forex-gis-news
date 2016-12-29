@@ -7,7 +7,7 @@ import jieba
 import sys
 
 jieba.enable_parallel(4)
-jieba.load_userdict("dict.txt.big")
+jieba.load_userdict("./jieba/extra_dict/dict.txt.big")
 
 def cuttest(test_sent):
     result = jieba.cut(test_sent, cut_all=True)
