@@ -38,4 +38,5 @@ for d in data:
     sql = "update rss_rating (id) values %d where id=%d" % d[0]
     cursor.execute(sql)
 
+db.commit()
 db.close()

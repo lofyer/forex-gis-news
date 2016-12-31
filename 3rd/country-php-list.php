@@ -1,3 +1,4 @@
+<?php
 $countryList = array(
 	"Africa" => array(
 		"DZ" => "Algeria",
@@ -263,3 +264,5 @@ $countryList = array(
 		"WF" => "Wallis and Futuna",
 	),
 );
+echo json_encode($countryList);
+?>

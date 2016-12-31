@@ -10,15 +10,24 @@ posts:
 
 rss_rating:
     id
-    tags 所属新闻标签
+    tag 所属新闻标签
     country 所属国家
+    currency 所属国家主流货币
     rating 对所属国家货币评分
+
+SQL: SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
 
 tags:
     id
     tag_name 新闻分类，用于训练
 
+SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag_name varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+
 city_map:
     id
     city
     country
+    country_iso
+    continent
+
+SQL: create table city_map(id int(11) NOT NULL AUTO_INCREMENT, city varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, country_iso varchar(128) DEFAULT NULL, continent varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
