@@ -34,7 +34,7 @@ cursor.execute("select id,title,content,url,date_format(str_to_date(date, '%d-%M
 data = cursor.fetchall()
 for d in data:
     print(d[1])
-    #cuttest(d[1])
+    cuttest(d[1])
     sql = "update rss_rating (id) values %d where id=%d" % d[0]
     cursor.execute(sql)
 
