@@ -21,7 +21,6 @@ tags:
     tag_name 新闻分类，用于训练
 
 SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag_name varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
-
 city_map:
     id
     city

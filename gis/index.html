@@ -67,12 +67,22 @@
       });
       $('#map1').vectorMap({
         map: 'world_mill_en',
+        //regionsSelectable: true,
         panOnDrag: true,
         focusOn: {
           x: 0.5,
           y: 0.5,
           scale: 2,
           animate: true
+        },
+        onRegionClick: function(event, code){
+            var map = $('#map1').vectorMap('get', 'mapObject');
+            var r = map.getRegionName(code);
+            alert(r);
+            alert("yes");
+        },
+        onRegionTipShow: function(e, el, code){
+            el.html(el.html()+' - News');
         },
         series: {
           regions: [{
