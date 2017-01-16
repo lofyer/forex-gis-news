@@ -51,7 +51,7 @@
       var $ = jQuery;
 
       $('#get-news').click(function(){
-        alert('Fine, I will get news for you.');
+        $('#txt-area').text("New text");
       });
       $('#focus-single').click(function(){
         $('#map1').vectorMap('set', 'focus', {region: 'AU', animate: true});
@@ -72,14 +72,13 @@
         focusOn: {
           x: 0.5,
           y: 0.5,
-          scale: 2,
+          scale: 1,
           animate: true
         },
         onRegionClick: function(event, code){
             var map = $('#map1').vectorMap('get', 'mapObject');
             var r = map.getRegionName(code);
             alert(r);
-            alert("yes");
         },
         onRegionTipShow: function(e, el, code){
             el.html(el.html()+' - News');
@@ -278,12 +277,16 @@
     })
   </script>
 </head>
+
 <body>
-  <div id="map1" style="width: 100%; height: 600px"></div>
+  <div id="map1" style="width: 90%; height: 600px"></div>
+  <div id="button-area">
   <button id="focus-single">Focus on Australia</button>
   <button id="focus-multiple">Focus on Australia and Japan</button>
   <button id="focus-coords">Focus on Cyprus</button>
   <button id="focus-init">Return to the initial state</button>
   <button id="get-news">Get news</button>
+  </div>
+  <div id="txt-area" style="width: 100%; height: 600px;">TEXT</div>
 </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+    function get_news(){
 // for php7
     try{
         $pdo = new PDO("mysql:host=localhost;dbname=rss;port=3306", "root", "pswd4mysql");
@@ -14,7 +15,7 @@
     $pdo->query('set posts utf8;');
     $result = $pdo->query($sql);
     $rows = $result->fetchAll();
-    echo "<html>";
+    //echo "<html>";
     foreach ($rows as $row) {
         $id = $row[0];
         $src_title = $row[1];
@@ -36,5 +37,6 @@
         echo "$content_hash</br>";
     }
     echo $cur_date;
-    echo "</html>";
+    //echo "</html>";
+    }
 ?>
