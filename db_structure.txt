@@ -8,19 +8,34 @@ posts:
     url
     title
 
+SQL: CREATE TABLE `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `src_title` varchar(128) DEFAULT NULL,
+  `src_link` varchar(128) DEFAULT NULL,
+  `date` varchar(32) DEFAULT NULL,
+  `content` varchar(20480) DEFAULT NULL,
+  `content_hash` varchar(64) DEFAULT NULL,
+  `url` varchar(128) DEFAULT NULL,
+  `title` varchar(128) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `hash_index` (`content_hash`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
 rss_rating:
-    id 新闻ID
+    id 新闻id
+    content_hash 新闻hash
     tag 所属新闻标签
     country 所属国家
     rating 对所属国家货币评分
 
-SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, content_hash varchar(64) DEFAULT NULL, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (id), KEY `hash_index` (`content_hash`))DEFAULT CHARSET=utf8;
 
 tags:
     id
     tag_name 新闻分类，用于训练
 
 SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag_name varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+
 city_map:
     id
     city
