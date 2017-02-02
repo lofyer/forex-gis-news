@@ -35,7 +35,10 @@ print(data)
 # Process data here
 #
 
-sql_cmd = 'select id,title,content,url,date from posts where id < 20000'
+today = date.strftime(date.today(),'%Y%m%d')
+date_format1 = "%d-%M-%Y"
+date_format2 = "%Y%m%d"
+sql_cmd = 'select id,title,content,url,date from posts where date_format(str_to_date(date, "%s"), "%s") like "%s";' % (date_format1, date_format2, today)
 print(sql_cmd)
 cursor.execute(sql_cmd)
 data = cursor.fetchall()
