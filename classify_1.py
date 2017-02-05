@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/local/bin/python2
 # -*- coding: UTF-8 -*-
 
 #
@@ -17,7 +17,7 @@ jieba.load_userdict("./jieba/extra_dict/dict.txt.big")
 def cuttest(test_sent):
     result = jieba.cut(test_sent, cut_all=False)
     for word in result:
-        print(word, "/", end=' ') 
+        print(word, end=' ') 
     print("")
 
 db = MySQLdb.connect("localhost",
@@ -25,17 +25,18 @@ db = MySQLdb.connect("localhost",
     "123456",
     "rss" )
 cursor = db.cursor()
-cursor.execute("show columns from posts")
-data = cursor.fetchall()
 
 # show columns
-print(data)
+sql_cmd = "select country from city_map group by country;"
+cursor.execute(sql_cmd)
+countries_all = cursor.fetchall()
 
 #
-# Process data here
+# Process news from right here
 #
 
-sql_cmd = 'select id,title,content,url,date from posts where id < 20000'
+# Get news
+sql_cmd = 'select id,title,content,url,date from posts where id < 200'
 print(sql_cmd)
 cursor.execute(sql_cmd)
 data = cursor.fetchall()
@@ -48,7 +49,19 @@ for d in data:
         continue
     print(d[0])
     print(d[1])
-    cuttest(d[1])
+    title = jieba.cut((d[1]), cut_all=False)
+    for t in title:
+        for c in countries_all:
+            if t == c[0]:
+                print(t)
+                print("yes")
+                print("yes")
+                print("yes")
+                print("yes")
+                print("yes")
+                print("yes")
+                print("yes")
+                print("yes")
     #sql = "update rss_rating (id) values %d where id=%d" % (d[0], d[0])
     #cursor.execute(sql)
 

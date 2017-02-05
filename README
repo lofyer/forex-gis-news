@@ -2,3 +2,14 @@
 2. 拖拽到某一时间的新闻与报告显示
 
 国家与城市来源：http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
+
+3. 尝试使用geograpy与pycountry
+
+nltk需要下载的内容包括:
+    punkt
+    averaged_perceptron_tagger
+    maxent_ne_chunker
+
+修复了geograpy的运行错误:
+    pip install newspapaer
+    python setup.py install
