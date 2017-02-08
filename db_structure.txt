@@ -21,6 +21,8 @@ SQL: CREATE TABLE `posts` (
   KEY `hash_index` (`content_hash`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+-------------------------------------
+
 rss_rating:
     id 新闻id
     content_hash 新闻hash
@@ -30,11 +32,15 @@ rss_rating:
 
 SQL: create table rss_rating(id int(11) NOT NULL AUTO_INCREMENT, content_hash varchar(64) DEFAULT NULL, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (id), KEY `hash_index` (`content_hash`))DEFAULT CHARSET=utf8;
 
+-------------------------------------
+
 tags:
     id
     tag_name 新闻分类，用于训练
 
 SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag_name varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+
+-------------------------------------
 
 city_map:
     id
@@ -46,3 +52,12 @@ city_map:
     continent
 
 SQL: create table city_map(id int(11) NOT NULL AUTO_INCREMENT, city varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, country_iso varchar(128) DEFAULT NULL, continent varchar(128) DEFAULT NULL, country_currency varchar(128) DEFAULT NULL, country_currency_iso varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+
+-------------------------------------
+
+rss_source:
+    id
+    link
+    country 所属国家，适合当地新闻
+
+SQL: create table rss_source(id int(11) NOT NULL AUTO_INCREMENT, link varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;

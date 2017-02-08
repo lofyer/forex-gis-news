@@ -1,9 +1,8 @@
 1. 国家的新闻与报告显示
 2. 拖拽到某一时间的新闻与报告显示
+3. 国家与城市来源：http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
 
-国家与城市来源：http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
-
-3. 尝试使用geograpy与pycountry
+4. 尝试使用geograpy与pycountry
 
 nltk需要下载的内容包括:
     punkt
@@ -13,3 +12,9 @@ nltk需要下载的内容包括:
 修复了geograpy的运行错误:
     pip install newspapaer
     python setup.py install
+
+5. 覆盖程度，以下仅供参考
+    标题判断: 头50000条会有13%的覆盖程度
+    标题判断与内容: 头50000条会有20%的覆盖程度
+
+6. 根据新闻关键词判断新闻，利用jieba tag解析
