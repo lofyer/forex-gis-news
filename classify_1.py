@@ -7,6 +7,7 @@
 
 from __future__ import print_function, unicode_literals
 from datetime import date
+from multiprocessing.dummy import Pool
 import jieba
 import sys
 import MySQLdb
@@ -14,81 +15,67 @@ import MySQLdb
 jieba.enable_parallel(4)
 jieba.load_userdict("./jieba/extra_dict/dict.txt.big")
 
-def cuttest(test_sent):
-    result = jieba.cut(test_sent, cut_all=False)
-    for word in result:
-        print(word, end=' ') 
-    print("")
-
 db = MySQLdb.connect("localhost",
     "root",
     "123456",
     "rss" )
 cursor = db.cursor()
 
-# show columns
 # country list
 sql_cmd = "select country from city_map group by country;"
 cursor.execute(sql_cmd)
 countries_all = cursor.fetchall()
 
-# city list
-sql_cmd = "select city from city_map group by city;"
+# city and country list, avoid frequent querying from db
+sql_cmd = "select city,country from city_map group by city;"
 cursor.execute(sql_cmd)
-cities_all = cursor.fetchall()
-print(cities_all)
-
-#
-# Process news from right here
-#
+cities_all = [x[0] for x in cursor.fetchall()]
 
 # Get news
 sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 100000 and id < 105000;'
 print(sql_cmd)
 cursor.execute(sql_cmd)
-data = cursor.fetchall()
+news_all = list(cursor.fetchall())
 
 #
 # STEP 1: which country
 #
+
 nplaced = 0.0
-nnews = len(data)
-for d in data:
-    if d == "":
-        continue
-    print("ID: %d" % d[0])
-    #print("Title: %s" % d[1])
-    title_word_list = list(jieba.cut((d[1]), cut_all=False))
-    content_word_list = list(jieba.cut((d[2]), cut_all=False))
-    placed = False
+nnews = len(news_all)
+
+def search_place(news):
+    global nplaced
+    print("ID: %d" % news[0])
+    title_word_list = list(jieba.cut((news[1]), cut_all=False))
+    #content_word_list = list(jieba.cut((news[2]), cut_all=False))
 
     # for title in country list
     for t in title_word_list:
-        for c in countries_all:
-            if t == c[0]:
-                nplaced += 1
-                placed = True
-                print(t)
+        if any(t in s[0] for s in countries_all):
+            nplaced += 1
+            print(t)
+            #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
+            #cursor.execute(sql)
+            # Use return rather than break
+            return 0
+        elif any(t in s[1] for s in cities_all):
+            nplaced += 1
+            selected_city = cursor.fetchall()
+            print(selected_city[0][0])
+            #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
+            #cursor.execute(sql)
+            return 0
 
-    # for title in city list
-    if placed == False:
-        for t in title_word_list:
-            for c in cities_all:
-                if t == c[0]:
-                    nplaced += 1
-                    cmd = 'select country from city_map where city=%s;' % t
-                    cursor.execute(sql_cmd)
-                    selected_city = cursor.fetchall()
-                    placed = True
-                    print("+++++++++++++++++++++++++++++")
-                    print(selected_city[0])
-
-    #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
-    #cursor.execute(sql)
+pool1 = Pool(4)
+pool1.map(search_place, news_all)
+pool1.close()
+pool1.join()
 
 print(nplaced)
 print(nnews)
 print('Percent of placed: %f' % (nplaced/nnews))
+exit()
 
 #db.commit()
 db.close()
