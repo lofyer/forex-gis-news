@@ -27,16 +27,23 @@ db = MySQLdb.connect("localhost",
 cursor = db.cursor()
 
 # show columns
+# country list
 sql_cmd = "select country from city_map group by country;"
 cursor.execute(sql_cmd)
 countries_all = cursor.fetchall()
+
+# city list
+sql_cmd = "select city from city_map group by city;"
+cursor.execute(sql_cmd)
+cities_all = cursor.fetchall()
+print(cities_all)
 
 #
 # Process news from right here
 #
 
 # Get news
-sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 50000 and id < 55000'
+sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 100000 and id < 105000;'
 print(sql_cmd)
 cursor.execute(sql_cmd)
 data = cursor.fetchall()
@@ -51,24 +58,30 @@ for d in data:
         continue
     print("ID: %d" % d[0])
     #print("Title: %s" % d[1])
-    title_word_list = jieba.cut((d[1]), cut_all=False)
-    content_word_list = jieba.cut((d[2]), cut_all=False)
+    title_word_list = list(jieba.cut((d[1]), cut_all=False))
+    content_word_list = list(jieba.cut((d[2]), cut_all=False))
     placed = False
-    # from title
+
+    # for title in country list
     for t in title_word_list:
         for c in countries_all:
             if t == c[0]:
                 nplaced += 1
                 placed = True
                 print(t)
-    # from content
+
+    # for title in city list
     if placed == False:
-        for t in content_word_list:
-            for c in countries_all:
+        for t in title_word_list:
+            for c in cities_all:
                 if t == c[0]:
                     nplaced += 1
+                    cmd = 'select country from city_map where city=%s;' % t
+                    cursor.execute(sql_cmd)
+                    selected_city = cursor.fetchall()
                     placed = True
-                    print(t)
+                    print("+++++++++++++++++++++++++++++")
+                    print(selected_city[0])
 
     #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
     #cursor.execute(sql)
