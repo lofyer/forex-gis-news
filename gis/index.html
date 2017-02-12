@@ -53,6 +53,9 @@
       $('#get-news').click(function(){
         $('#txt-area').text("New text");
       });
+      $('#clear-news').click(function(){
+        $('#txt-area').text("Click the country to watch today news.");
+      });
       $('#focus-single').click(function(){
         $('#map1').vectorMap('set', 'focus', {region: 'AU', animate: true});
       });
@@ -87,8 +90,10 @@
         ],
         onRegionClick: function(event, code){
             var map = $('#map1').vectorMap('get', 'mapObject');
-            var r = map.getRegionName(code);
-            $('#txt-area').text(r);
+            var country = map.getRegionName(code);
+            var div = document.getElementById("txt-area");
+            var output = div.innerHTML + "</br>News of " + country + " - " + code;
+            div.innerHTML = output;
         },
         onRegionTipShow: function(e, el, code){
             el.html(el.html()+' - News');
@@ -304,14 +309,15 @@
     <div id="title-menu">Welcome</div>
     <div id="body-area">
         <div id="map1"></div>
-        <div id="txt-area">TEXT</div>
+        <div id="txt-area">Click the country to watch today news.</div>
     </div>
     <div id="button-area">
         <button id="focus-single">Focus on Australia</button>
         <button id="focus-multiple">Focus on Australia and Japan</button>
-        <button id="focus-coords">Focus on Cyprus</button>
+        <!--<button id="focus-coords">Focus on Cyprus</button>-->
         <button id="focus-init">Return to the initial state</button>
         <button id="get-news">Get news</button>
+        <button id="clear-news">Clear</button>
     </div>
 </body>
 </html>
