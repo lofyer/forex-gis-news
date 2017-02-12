@@ -36,7 +36,8 @@ SQL: create table rss_rating(id int(11) NOT NULL AUTO_INCREMENT, content_hash va
 
 tags:
     id
-    tag_name 新闻分类，用于训练
+    tag 新闻分类，用于训练：体育sport、时政politic、经济economic、娱乐entertainment、社会society、科技tech、军事military等
+    keyword 每个tag的关键字
 
 SQL: create table tag(id int(11) NOT NULL AUTO_INCREMENT, tag_name varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
 
@@ -58,6 +59,7 @@ SQL: create table city_map(id int(11) NOT NULL AUTO_INCREMENT, city varchar(128)
 rss_source:
     id
     link
+    tag
     country 所属国家，适合当地新闻
 
-SQL: create table rss_source(id int(11) NOT NULL AUTO_INCREMENT, link varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;
+SQL: create table rss_source(id int(11) NOT NULL AUTO_INCREMENT, link varchar(128) DEFAULT NULL,tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, PRIMARY KEY (id))DEFAULT CHARSET=utf8;

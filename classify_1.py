@@ -24,12 +24,14 @@ cursor = db.cursor()
 # country list
 sql_cmd = "select country from city_map group by country;"
 cursor.execute(sql_cmd)
-countries_all = cursor.fetchall()
+countries_all = [ x[0] for x in cursor.fetchall() ]
 
 # city and country list, avoid frequent querying from db
 sql_cmd = "select city,country from city_map group by city;"
 cursor.execute(sql_cmd)
-cities_all = [x[0] for x in cursor.fetchall()]
+cities_countries_all = cursor.fetchall()
+cities_all = [ x[0] for x in cities_countries_all ]
+countries_of_cities_all = [ x[1] for x in cities_countries_all ]
 
 # Get news
 sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 100000 and id < 105000;'
@@ -52,17 +54,16 @@ def search_place(news):
 
     # for title in country list
     for t in title_word_list:
-        if any(t in s[0] for s in countries_all):
+        if t in countries_all:
             nplaced += 1
             print(t)
             #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
             #cursor.execute(sql)
             # Use return rather than break
             return 0
-        elif any(t in s[1] for s in cities_all):
+        elif t in cities_all:
             nplaced += 1
-            selected_city = cursor.fetchall()
-            print(selected_city[0][0])
+            print(countries_of_cities_all[cities_all.index(t)])
             #sql = "update rss_rating (content_hash) values %d where content_hash=%s" % (d[5], d[5])
             #cursor.execute(sql)
             return 0
