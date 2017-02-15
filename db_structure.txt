@@ -28,9 +28,10 @@ rss_rating:
     content_hash 新闻hash
     tag 所属新闻标签
     country 所属国家
+    currency 所属国家货币
     rating 对所属国家货币评分
 
-SQL: create table rss_rating(id int(11) NOT NULL AUTO_INCREMENT, content_hash varchar(64) DEFAULT NULL, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (id), KEY `hash_index` (`content_hash`))DEFAULT CHARSET=utf8;
+SQL: create table rss_rating(id int(11) DEFAULT NULL, content_hash varchar(64) DEFAULT NULL, tag varchar(128) DEFAULT NULL, country varchar(128) DEFAULT NULL, currency varchar(128) DEFAULT NULL, rating varchar(128) DEFAULT NULL, PRIMARY KEY (content_hash), KEY `hash_index` (`content_hash`))DEFAULT CHARSET=utf8;
 
 -------------------------------------
 

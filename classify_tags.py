@@ -1,11 +1,11 @@
-#!/usr/local/bin/python2
+#!/usr/local/bin/python3
 # -*- coding: UTF-8 -*-
 
 #
 # This script will update the rss_rating:rss_rating:(id, content_hash, country)
 #
 
-from __future__ import print_function, unicode_literals
+
 from datetime import date
 from multiprocessing.dummy import Pool
 import jieba

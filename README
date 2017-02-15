@@ -17,3 +17,8 @@ nltk需要下载的内容包括:
     根据国家与城市解析标题: 53%
 
 6. 根据新闻关键词判断新闻，利用jieba tag解析
+
+7. python2 -> python3
+
+8. MySQL客户端
+    pip3 install pymysql
