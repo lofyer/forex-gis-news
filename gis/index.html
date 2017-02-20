@@ -92,13 +92,15 @@
             var map = $('#map1').vectorMap('get', 'mapObject');
             var country = map.getRegionName(code);
             var div = document.getElementById("txt-area");
-            var output = div.innerHTML + "</br>News of " + country + " - " + code;
-            div.innerHTML = output;
+            //var output = div.innerHTML + "</br>News of " + country + " - " + code;
+            div.innerHTML = "Loading news of " + country;
+
             var oReq = new XMLHttpRequest(); //New request object
             oReq.onload = function() {
             //This is where you handle what to do with the response.
             //The actual data is found on this.responseText
-            $('#txt-area').text(this.responseText);
+                div.innerHTML = div.innerHTML + this.responseText;
+                //$('#txt-area').text(this.responseText);
             };
             oReq.open("get", "get_news_cmd.php?country="+country, true);
             //                               ^ Don't block the rest of the execution.
