@@ -94,6 +94,18 @@
             var div = document.getElementById("txt-area");
             var output = div.innerHTML + "</br>News of " + country + " - " + code;
             div.innerHTML = output;
+            var oReq = new XMLHttpRequest(); //New request object
+            oReq.onload = function() {
+            //This is where you handle what to do with the response.
+            //The actual data is found on this.responseText
+            $('#txt-area').text(this.responseText);
+            };
+            oReq.open("get", "get_news_cmd.php?country="+country, true);
+            //                               ^ Don't block the rest of the execution.
+            //                                 Don't wait until the request finishes to 
+            //                                 continue.
+            oReq.send();
+
         },
         onRegionTipShow: function(e, el, code){
             el.html(el.html()+' - News');
