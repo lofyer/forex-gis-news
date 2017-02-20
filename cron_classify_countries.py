@@ -1,16 +1,11 @@
 #!/usr/local/bin/python3
 # -*- coding: UTF-8 -*-
 
-#
-# This script will update the rss_rating:rss_rating:(id, content_hash, country)
-#
-
 from datetime import date
 from multiprocessing.dummy import Pool
 import jieba
 import sys
 import pymysql
-import pymysql.cursors
 
 jieba.enable_parallel(4)
 jieba.load_userdict("./jieba/extra_dict/dict.txt.big")

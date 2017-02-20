@@ -1,10 +1,6 @@
 #!/usr/local/bin/python3
 # -*- coding: UTF-8 -*-
 
-#
-# This script will update the rss_rating:rss_rating:(id, content_hash, country)
-#
-
 from datetime import date
 from multiprocessing.dummy import Pool
 import jieba
@@ -40,13 +36,10 @@ cities_all = [ x[0] for x in cities_countries_all ]
 countries_of_cities_all = [ x[1] for x in cities_countries_all ]
 
 ### Get news
-sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 100000 and id < 100500;'
+sql_cmd = 'select id,title,content,url,date,content_hash from posts where id > 100000 and id < 150000;'
 print(sql_cmd)
 cursor.execute(sql_cmd)
 news_all = list(cursor.fetchall())
-
-
-### STEP 1: which country
 
 nplaced = 0.0
 nnews = len(news_all)
@@ -75,7 +68,7 @@ def search_place(news):
             return 0
     return 1
 
-pool1 = Pool()
+pool1 = Pool(16)
 pool1.map(search_place, news_all)
 pool1.close()
 pool1.join()

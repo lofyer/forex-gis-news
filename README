@@ -4,21 +4,19 @@
 
 4. 尝试使用geograpy与pycountry
 
-nltk需要下载的内容包括:
-    punkt
-    averaged_perceptron_tagger
-    maxent_ne_chunker
-
-修复了geograpy的运行错误:
-    pip install newspapaer
-    python setup.py install
+    nltk需要下载的内容包括:
+        punkt
+        averaged_perceptron_tagger
+        maxent_ne_chunker
 
 5. 覆盖程度，以下仅供参考
     根据国家与城市解析标题: 53%
 
-6. 根据新闻关键词判断新闻，利用jieba tag解析
+6. 根据新闻关键词判断新闻，利用jieba tag extractor解析
 
 7. python2 -> python3
 
 8. MySQL客户端
     pip3 install pymysql
+
+9. 尝试直接从SQL中直接根据所选城市名过滤当天新闻

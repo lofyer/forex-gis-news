@@ -2,16 +2,16 @@
     function get_news($country){
 // for php7
     try{
-        $pdo = new PDO("mysql:host=localhost;dbname=rss;port=3306", "root", "pswd4mysql");
+        $pdo = new PDO("mysql:host=127.0.0.1;dbname=rss;port=3306", "root", "123456");
     } catch (PDOException $e) {
         echo 'Connection failed: ' . $e->getMessage();
     }
     $cur_date = date("d-M-Y");
-    //$sql = "select * from posts where country='$country';";
     $sql = "select * from posts where date like '$cur_date%' limit 10";
-    #$sql = 'select * from posts where date_format(str_to_date(date, "%d-%M-%Y"), "%Y%m%d")="$cur_date";';
-    //$sql = "select id,src_title,src_link,url,content_hash,title,content,date_format(str_to_date(date, '%d-%M-%Y'), '%Y%m%d') as date_new from posts where date_to_str(date_new)='2016-07-02';";
-    #$sql = "select distinct(src_title) from posts order by src_title;"
+    // From today news;
+    //$sql = "select posts.*,rss_rating.country,city_map.country_iso,city_map.continent,city_map.country_currency,city_map.country_currency_iso from posts inner join rss_rating on posts.content_hash=rss_rating.content_hash inner join city_map on rss_rating.country=city_map.country where rss_rating.country='Canada' and date like '$cur_date%' limit 10;"
+    // From city_map;
+    //$sql = "select posts.*,rss_rating.country,city_map.country_iso,city_map.continent,city_map.country_currency,city_map.country_currency_iso from posts inner join rss_rating on posts.content_hash=rss_rating.content_hash inner join city_map on rss_rating.country=city_map.country where rss_rating.country='Canada' and date like '$cur_date%' limit 10;"
     echo $sql . "</br>";
     $pdo->query('set posts utf8;');
     $result = $pdo->query($sql);
