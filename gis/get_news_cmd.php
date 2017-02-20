@@ -7,8 +7,8 @@
         echo 'Connection failed: ' . $e->getMessage();
     }
     $cur_date = date("d-M-Y");
-    $sql = "select * from posts where country='$country';";
-    //$sql = 'select * from posts where date like "$cur_date%"';
+    //$sql = "select * from posts where country='$country';";
+    $sql = "select * from posts where date like '$cur_date%'";
     #$sql = 'select * from posts where date_format(str_to_date(date, "%d-%M-%Y"), "%Y%m%d")="$cur_date";';
     //$sql = "select id,src_title,src_link,url,content_hash,title,content,date_format(str_to_date(date, '%d-%M-%Y'), '%Y%m%d') as date_new from posts where date_to_str(date_new)='2016-07-02';";
     #$sql = "select distinct(src_title) from posts order by src_title;"
