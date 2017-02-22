@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/local/bin/python2
 # -*- coding: UTF-8 -*-
 import MySQLdb
 import json

@@ -49,13 +49,16 @@
     jQuery.noConflict();
     jQuery(function(){
       var $ = jQuery;
-      $.getJSON('linode.json', function(data){
+      $.getJSON('data.json', function(data){
       //servereValues = jvm.values.apply({}, jvm.values(data.server)),
       serverLocationValues = Array.prototype.concat.apply([], jvm.values(data.server.location));
       serverIPValues = Array.prototype.concat.apply([], jvm.values(data.server.ip));
 
       $('#clear-news').click(function(){
         $('#txt-area').text("Click the country to watch today news.");
+      });
+      $('#keyword-trump').click(function(){
+        $('#txt-area').text("3 days news of Trump.");
       });
       $('#focus-single').click(function(){
         $('#map1').vectorMap('set', 'focus', {region: 'AU', animate: true});
@@ -79,12 +82,13 @@
           scale: 1,
           animate: true
         },
-        markerStyle: {
-            initial: {
-            fill: '#F8E23B',
-            stroke: '#383f47',
-          }
-        },
+        //markerStyle: {
+        //    initial: {
+        //    fill: '#F8E23B',
+        //    r: 5,
+        //    stroke: '#383f47',
+        //  }
+        //},
         onMarkerTipShow: function(event, label, index){
             //label.html("Server location: " + label.html() + "</br>IP: 123.123.123.123</br>");
             label.html("Server location: " + data.server.location[index] +"</br>Hostname: " + data.server.hostname[index] + "</br>IP: " + data.server.ip[index]);
@@ -121,13 +125,18 @@
         markers: data.server.coords,
         series: {
           markers: [{
+              // Yellow to red, scale=1 to 10, value is degree
               attribute: 'fill',
-              //scale: ['#FEE5D9', '#A50F15'],
-              //values: data.metro.unemployment[val],
+              scale: ['#F8E23B', '#A50F15'],
+              min: 1,
+              max: 10,
+              values: data.server.color
             },{
               attribute: 'r',
-              //scale: [5, 20],
-              //values: data.metro.population[val],
+              scale: [5, 10],
+              min: 5,
+              max: 10,
+              values: [5, 5]
           }],
           regions: [{
             scale: ['#C8EEFF', '#0071A4'],
@@ -349,6 +358,7 @@
         <!--<button id="focus-coords">Focus on Cyprus</button>-->
         <button id="focus-init">Return to the initial state</button>
         <button id="clear-news">Clear</button>
+        <button id="keyword-trump">Keyword: Trump</button>
     </div>
 </body>
 </html>
