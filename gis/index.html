@@ -49,6 +49,10 @@
     jQuery.noConflict();
     jQuery(function(){
       var $ = jQuery;
+      $.getJSON('linode.json', function(data){
+      //servereValues = jvm.values.apply({}, jvm.values(data.server)),
+      serverLocationValues = Array.prototype.concat.apply([], jvm.values(data.server.location));
+      serverIPValues = Array.prototype.concat.apply([], jvm.values(data.server.ip));
 
       $('#clear-news').click(function(){
         $('#txt-area').text("Click the country to watch today news.");
@@ -67,7 +71,7 @@
       });
       $('#map1').vectorMap({
         map: 'world_mill_en',
-        //regionsSelectable: true,
+        regionsSelectable: false,
         panOnDrag: true,
         focusOn: {
           x: 0.5,
@@ -81,18 +85,18 @@
             stroke: '#383f47',
           }
         },
-        markers: [
-          {latLng: [35.42, 139.46], name: 'Tokyo'},
-          {latLng: [31.2, 121.4], name: 'Shanghai'},
-        ],
+        onMarkerTipShow: function(event, label, index){
+            //label.html("Server location: " + label.html() + "</br>IP: 123.123.123.123</br>");
+            label.html("Server location: " + data.server.location[index] +"</br>Hostname: " + data.server.hostname[index] + "</br>IP: " + data.server.ip[index]);
+        },
         onRegionClick: function(event, code){
             var map = $('#map1').vectorMap('get', 'mapObject');
             var country = map.getRegionName(code);
             var div = document.getElementById("txt-area");
             //var output = div.innerHTML + "</br>News of " + country + " - " + code;
             div.innerHTML = "Loading news of " + country + "</br>";
-
-            var oReq = new XMLHttpRequest(); //New request object
+            //New request object
+            var oReq = new XMLHttpRequest();
             oReq.onload = function() {
             //This is where you handle what to do with the response.
             //The actual data is found on this.responseText
@@ -101,8 +105,8 @@
             };
             oReq.timeout = 5000;
             oReq.ontimeout = function (e) {
+                // XMLHttpRequest timeout
                 alert("Timeout.");
-                // XMLHttpRequest 超时。在此做某事。
             };
             oReq.open("get", "get_news_cmd.php?country="+country, true);
             //                               ^ Don't block the rest of the execution.
@@ -114,7 +118,17 @@
         onRegionTipShow: function(e, el, code){
             el.html(el.html()+' - News');
         },
+        markers: data.server.coords,
         series: {
+          markers: [{
+              attribute: 'fill',
+              //scale: ['#FEE5D9', '#A50F15'],
+              //values: data.metro.unemployment[val],
+            },{
+              attribute: 'r',
+              //scale: [5, 20],
+              //values: data.metro.population[val],
+          }],
           regions: [{
             scale: ['#C8EEFF', '#0071A4'],
             normalizeFunction: 'polynomial',
@@ -306,6 +320,7 @@
         }
       });
     })
+  });
   </script>
 
 <style>
