@@ -1,9 +1,9 @@
 #!/bin/bash
 n=0
-for i in $(seq 1 4)
+for i in $(seq 1 2)
 do
     min=$n
-    n=$(($n+500000))
+    n=$(($n+1000000))
     max=$n
     echo "round $i"
     echo $min

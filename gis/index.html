@@ -107,7 +107,7 @@
                 div.innerHTML = div.innerHTML + this.responseText;
                 //$('#txt-area').text(this.responseText);
             };
-            oReq.timeout = 5000;
+            oReq.timeout = 300000;
             oReq.ontimeout = function (e) {
                 // XMLHttpRequest timeout
                 alert("Timeout.");
