@@ -3,6 +3,7 @@
 3. 国家与城市来源：
     http://download.maxmind.com/download/worldcities/worldcitiespop.txt.gz
     http://dev.maxmind.com/geoip/geolite2/
+    使用本地数据库重新分类
 
 4. 尝试使用geograpy与pycountry
 
@@ -26,3 +27,5 @@
 10. 界面显示服务器与客户端的地理位置和IP
 
 11. 当天关键字新闻
+
+12. 尝试使用Oracle 12
