@@ -1,3 +1,6 @@
 [submodule "jieba"]
 	path = jieba
 	url = https://github.com/fxsjy/jieba
+[submodule "gis/oss-php-client"]
+	path = gis/oss-php-client
+	url = https://github.com/jaeksoft/opensearchserver-php-client

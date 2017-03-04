@@ -5,7 +5,11 @@
     http://dev.maxmind.com/geoip/geolite2/
     使用本地数据库重新分类
 
-4. 尝试使用geograpy与pycountry
+4. 尝试使用geograpy（从句子解析国家城市）与pycountry（国家省市信息）
+    geotext
+       更快
+    geograpy
+        pip3 install extraction urlparse
 
     nltk需要下载的内容包括:
         punkt
@@ -29,3 +33,6 @@
 11. 当天关键字新闻
 
 12. 尝试使用Oracle 12
+
+13. 可选OSS搜索，但由于计算能力有限所以时效性略差
+    php composer

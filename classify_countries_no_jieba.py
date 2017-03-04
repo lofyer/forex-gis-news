@@ -3,13 +3,10 @@
 
 from datetime import date
 from multiprocessing.dummy import Pool
-import jieba
+from geotext import GeoText
 import sys
 import pymysql
 import pymysql.cursors
-
-jieba.enable_parallel(4)
-jieba.load_userdict("./jieba/extra_dict/dict.txt.big")
 
 db = pymysql.connect(
     host = "localhost",
@@ -48,24 +45,24 @@ def search_place(news):
     global nplaced
     global cursor
     print("ID: {0}".format(news[0]))
-    title_word_list = list(jieba.cut((news[1]), cut_all=False))
-    #content_word_list = list(jieba.cut((news[2]), cut_all=False))
-
-    for t in title_word_list:
-        if t in countries_all:
-            nplaced += 1
-            #print(t)
-            sql_cmd = 'insert into rss_rating (id, content_hash, country) values ("{0}", "{1}", "{2}") ON DUPLICATE KEY UPDATE country="{3}";'.format(news[0], news[5], t, t)
+    t = GeoText(news[1])
+    if t.countries :
+        nplaced += 1
+        #print(t)
+        for i in t.countries:
+            print(i)
+            sql_cmd = 'insert into rss_rating (id, content_hash, country) values ("{0}", "{1}", "{2}") ON DUPLICATE KEY UPDATE country="{3}";'.format(news[0], news[5], i, i)
             cursor.execute(sql_cmd)
-            ### Use return rather than break
-            return 0
-        elif t in cities_all:
-            nplaced += 1
+        return 0
+    if t.cities:
+        nplaced += 1
+        for i in t.cities:
+            if i in cities_all:
             #print(countries_of_cities_all[cities_all.index(t)])
-            t_country = countries_of_cities_all[cities_all.index(t)]
-            sql_cmd = 'insert into rss_rating (id, content_hash, country) values ("{0}", "{1}", "{2}") ON DUPLICATE KEY UPDATE country="{3}";'.format(news[0], news[5], t_country, t_country)
-            cursor.execute(sql_cmd)
-            return 0
+                t_country = countries_of_cities_all[cities_all.index(i)]
+                sql_cmd = 'insert into rss_rating (id, content_hash, country) values ("{0}", "{1}", "{2}") ON DUPLICATE KEY UPDATE country="{3}";'.format(news[0], news[5], t_country, t_country)
+                cursor.execute(sql_cmd)
+                return 0
     return 1
 
 # pymysql threadsafety is 1
