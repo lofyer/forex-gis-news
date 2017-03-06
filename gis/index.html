@@ -58,7 +58,7 @@
       $('#clear-news').click(function(){
         $('#txt-area').text("Click the country to watch today news.");
       });
-      $('#keyword-trump').click(function(){
+      $('#keyword-today').click(function(){
         $('#txt-area').text("3 days news of Trump.");
       });
       $('#focus-single').click(function(){
@@ -108,10 +108,10 @@
                 div.innerHTML = div.innerHTML + this.responseText;
                 //$('#txt-area').text(this.responseText);
             };
-            oReq.timeout = 300000;
+            oReq.timeout = 15000;
             oReq.ontimeout = function (e) {
                 // XMLHttpRequest timeout
-                alert("Timeout.");
+                alert("Timeout. Try again.");
             };
             oReq.open("get", "get_news_oss.php?country="+country, true);
             //                               ^ Don't block the rest of the execution.
@@ -359,7 +359,7 @@
         <!--<button id="focus-coords">Focus on Cyprus</button>-->
         <button id="focus-init">Return to the initial state</button>
         <button id="clear-news">Clear</button>
-        <button id="keyword-trump">Keyword: Trump</button>
+        <button id="keyword-today">Today News</button>
     </div>
 </body>
 </html>
